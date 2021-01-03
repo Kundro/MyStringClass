@@ -1,0 +1,2 @@
+D:\Visual\Projects\MyString\Debug\MyString.exe
+D:\Visual\Projects\MyString\Debug\MyString.pdb
