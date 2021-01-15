@@ -4,29 +4,36 @@ using namespace std;
 class MyString
 {
 public:
-	MyString()
+	MyString()  // конструктор - без параметров
 	{
 		str = nullptr;
 	}
-	MyString(char *str)
+	MyString(char *str)  // конструктор с параметрами, которому необходимо передать страку, которую он будет хранить
 	{
-		int length = strlen(str);
+		int length = strlen(str); // функция strlen получает кол-во символов в строке, которую мы передаем в обьект
+		
+		// выделяем память для динамического массива где будет хранится наша строка
+		// +1 символ, т.к. нужно местро под терминирующий ноль
 		this->str = new char[length + 1];
+
+		// копируем символы строки в массив нашего класса
 		for (int i = 0; i < length; i++)
 		{
 			this->str[i] = str[i];
 		}
+
+		// закрываем строку терминирующим нулём
 		this->str[length] = '\0'; 
 	}
-	~MyString() 
+	~MyString() // деструктор
 	{
-		delete[] this->str;  
+		delete[] this->str;    // отвечает за освобождение ресурсов занятых объектом (вызывается при уничтожении объекта класса)
 	}
 	void Print()
 	{
 		cout << str;
 	}
-	MyString& operator=(const MyString& other)
+	MyString& operator=(const MyString& other) // перегруженный оператор присваивания 
 	{
 		if (this->str != nullptr)
 		{
@@ -43,7 +50,8 @@ public:
 		return *this;
 	}
 
-	MyString(const MyString& other)
+	MyString(const MyString& other) // конструктор копирования, необходим для создания точной копии объекта класса
+									// но в другой области памяти
 	{
 		int length = strlen(other.str);
 		this->str = new char[length + 1];
@@ -54,9 +62,9 @@ public:
 		this->str[length] = '\0';
 	}
 
-	MyString operator+(const MyString& other)
+	MyString operator+(const MyString& other) // перегруженный оператор сложения (для конкатенации строк)
 	{
-		MyString temp;
+		MyString temp; // создаем новый пустой обьект где будем хранить рез-т конкатенации строк и который будет результатом работы
 		int thisLength = strlen(this->str);
 		int otherLength = strlen(other.str);
 
@@ -73,7 +81,12 @@ public:
 		temp.str[thisLength + otherLength] = '\0';
 		return temp;
 	}
-private:
+
+	int Length() {
+
+	}
+
+private: // указатель на массив char, хранит символы, которые мы передали в наш объект 
 	char* str;
 };  
 
